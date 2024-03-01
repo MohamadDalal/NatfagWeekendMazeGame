@@ -78,14 +78,18 @@ class levelMakerClass():
     def saveLevel(self):
         path = asksaveasfilename()
         print(path)
-        if path is str:
+        try:
+            if path[-5:] != ".json":
+                path = path + ".json"
             with open(path, "w") as f:
                 json.dump(self.currentLevel, f)
                 retVal =  True
-        else:
+        except Exception as e:
+            print(e)
             retVal = False
-        pygame.event.clear()
-        return retVal
+        finally:
+            pygame.event.clear()
+            return retVal
 
     def startMenu(self, eventList):
         screen.fill((0,0,0))
@@ -162,7 +166,7 @@ class levelMakerClass():
         self.screen.blit(menu_Text1,(self.screenSize[0]//3,self.screenSize[1]*2//7))
         self.screen.blit(menu_Text2,(self.screenSize[0]//3,self.screenSize[1]*3//7))
         self.screen.blit(menu_Text3,(self.screenSize[0]//3,self.screenSize[1]*4//7))
-        self.screen.blit(menu_Cursor,(self.screenSize[0]//4,self.screenSize[1]*(2+self.menuCursorPos)/76))
+        self.screen.blit(menu_Cursor,(self.screenSize[0]//4,self.screenSize[1]*(2+self.menuCursorPos)//7))
 
     def levelEditor(self, eventList):
         screen.fill((0,0,0))
