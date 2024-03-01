@@ -1,6 +1,8 @@
 import pygame
 # Import the level you want to play.
-from Levels.level1 import levelList, startPos, endPos
+#from Levels.level1 import levelList, startPos, endPos
+# Now we save levels as JSON files and read those instead
+import json
 
 # Function that uninitializes the pygame module
 def close(runBool):
@@ -9,9 +11,21 @@ def close(runBool):
     pygame.quit()
     exit()
 
+# Read level JSON and load the level
+levelPath = "Levels/level1.json"
+# Use with statement, which makes sure the file gets closed when we are done with the code inside
+with open(levelPath, "r") as f:
+    # json.load loads the JSON file as a python dictionary
+    levelDict = json.load(f)
+# Assign the lists from the level dictionary to their respective variables
+levelList = levelDict["levelList"]
+startPos = levelDict["startPos"]
+endPos = levelDict["endPos"]
+
 # Frames Per Second for the game
-FPS = 20
+FPS = 10
 # Screen size to display the game. Make smaller if the window is too big
+#ScreenSize = 1080, 640
 ScreenSize = 2160, 1280
 # Number of squares to split the window
 gridSizeX, gridSizeY = 27, 16
